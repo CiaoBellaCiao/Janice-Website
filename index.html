@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Virtual Assistants</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1f2937;
+            scroll-behavior: smooth;
+        }
+        .scroll-to-target {
+            scroll-margin-top: 5rem;
+        }
+        .blue-gradient {
+            background: linear-gradient(135deg, #a5f3fc 0%, #bfdbfe 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md rounded-b-xl backdrop-blur-sm bg-opacity-80">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-gray-800">AI-Powered Virtual Assistants</a>
+            <div class="space-x-4 md:flex hidden">
+                <a href="#about" class="text-gray-600 hover:text-indigo-600 transition-colors duration-300">About</a>
+                <a href="#services" class="text-gray-600 hover:text-indigo-600 transition-colors duration-300">Services</a>
+                <a href="#why-hire" class="text-gray-600 hover:text-indigo-600 transition-colors duration-300">Why Hire</a>
+                <a href="#contact" class="text-gray-600 hover:text-indigo-600 transition-colors duration-300">Contact</a>
+            </div>
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-800 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile menu content -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white">
+            <a href="#about" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">About</a>
+            <a href="#services" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Services</a>
+            <a href="#why-hire" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Why Hire</a>
+            <a href="#contact" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Contact</a>
+        </div>
+    </nav>
+
+    <main class="py-20">
+        <!-- Hero Section -->
+        <section id="about" class="container mx-auto px-6 pt-12 md:flex items-center justify-between text-center md:text-left">
+            <div class="md:w-1/2 md:pr-12">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-blue-900 leading-tight">AI-Powered Virtual Assistants</h1>
+                <p class="mt-4 text-xl text-gray-600">
+                    Hi, I'm Janice Siocon. I lead a 3-person team of AI-Powered Virtual Assistants from the Philippines.
+                </p>
+                <p class="mt-8 text-2xl text-blue-800 font-semibold">
+                    Free up 10+ hours/week with an AI-Powered Virtual Assistants. Flexible. Remote. Hourly
+                </p>
+            </div>
+            <div class="md:w-1/2 mt-10 md:mt-0 flex justify-center">
+                <img src="https://drive.google.com/thumbnail?id=1bZOpv-_c8E6pEcCSKGhnsNmZxUuFqNPT&sz=w1200"
+     alt="Janice Siocon"
+     loading="lazy"
+     class="rounded-2xl shadow-xl w-64 h-64 md:w-80 md:h-80 object-cover bg-gray-200">
+            </div>
+        </section>
+
+        <!-- Services & Pricing Section -->
+        <section id="services" class="container mx-auto px-6 py-20 scroll-to-target">
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                <h2 class="text-4xl font-bold text-center text-blue-900 mb-6">Services & Pricing</h2>
+                <p class="text-center text-lg text-gray-600 mb-12">
+                    In today's fast-paced world, solopreneurs and founders juggle endless emails, client calls, and growing to-do lists. For AI agency owners, the challenge multiplies-balancing client delivery, lead generation, and operations without burning out. The truth? Important opportunities slip through the cracks, and growth slows down while you get buried in admin. That's where we come in. With our AI-Powered Virtual Assistant team, you'll gain back 10+ hours every week by offloading the tasks that slow you down, so you can focus on growth, clients, and innovation.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Email & Calendar Management -->
+                    <div class="p-6 rounded-2xl border border-gray-200">
+                        <h3 class="text-2xl font-semibold text-blue-800 mb-3">Email & Calendar Management</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Organize inboxes, prioritize replies, and keep you on top of key communication.</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Schedule and manage meetings so you never miss important calls.</li>
+                        </ul>
+                    </div>
+                    <!-- Project & Operations Management -->
+                    <div class="p-6 rounded-2xl border border-gray-200">
+                        <h3 class="text-2xl font-semibold text-blue-800 mb-3">Project & Operations Management</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Manage ongoing projects and tasks across tools.</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Provide reporting, updates, and ensure smooth execution.</li>
+                        </ul>
+                    </div>
+                    <!-- Lead Generation (LinkedIn Sales Navigator) -->
+                    <div class="p-6 rounded-2xl border border-gray-200">
+                        <h3 class="text-2xl font-semibold text-blue-800 mb-3">Lead Generation (LinkedIn Sales Navigator)</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Research and qualify leads.</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Build prospect lists tailored to your target market.</li>
+                        </ul>
+                    </div>
+                    <!-- Cold Email Outreach -->
+                    <div class="p-6 rounded-2xl border border-gray-200">
+                        <h3 class="text-2xl font-semibold text-blue-800 mb-3">Cold Email Outreach</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Run targeted outreach campaigns.</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Track responses and ensure consistent follow-ups.</li>
+                        </ul>
+                    </div>
+                    <!-- Customer Support & Follow-Ups -->
+                    <div class="p-6 rounded-2xl border border-gray-200">
+                        <h3 class="text-2xl font-semibold text-blue-800 mb-3">Customer Support & Follow-Ups</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Handle client communication via email.</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Keep relationships warm with timely responses.</li>
+                        </ul>
+                    </div>
+                    <!-- Website Chatbot Setup -->
+                    <div class="p-6 rounded-2xl border border-gray-200">
+                        <h3 class="text-2xl font-semibold text-blue-800 mb-3">Website Chatbot Setup</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Build and integrate chatbots to capture leads directly on your website.</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Automate responses and streamline customer engagement.</li>
+                        </ul>
+                    </div>
+                    <!-- LinkedIn Management (Company & Personal) -->
+                    <div class="p-6 rounded-2xl border border-gray-200">
+                        <h3 class="text-2xl font-semibold text-blue-800 mb-3">LinkedIn Management (Company & Personal)</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Plan and schedule content that builds brand presence.</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Manage inbox responses and grow your professional network.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-center">
+                    <h3 class="text-3xl font-bold text-blue-800 mb-4">Pricing</h3>
+                    <p class="text-2xl font-bold text-blue-600 mb-2">$10 USD / Hour</p>
+                    <p class="text-gray-500 font-medium">Flexible, On-Demand Support</p>
+                    <p class="mt-4 text-gray-700 max-w-lg mx-auto">
+                        Why hire a full-time assistant when you only need focused support?
+                        Pay only for the hours you actually use. Scale up or down depending on workload. A dedicated VA plus a trained backup team, so nothing slips through the cracks.
+                    </p>
+                    <p class="mt-4 italic text-gray-500">
+                        For less than the cost of a coffee, you buy back hours to focus on what truly matters: growth, clients, and revenue.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Why Hire Section -->
+        <section id="why-hire" class="container mx-auto px-6 py-20 scroll-to-target">
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                <h2 class="text-4xl font-bold text-center text-blue-900 mb-6">Why Hire an AI Powered Virtual Assistant</h2>
+                <ul class="text-lg text-gray-700 space-y-4 max-w-2xl mx-auto">
+                    <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Only pay for the time you actually need.</li>
+                    <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>No lengthy recruitment process.</li>
+                    <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>More time for you to run and grow your business.</li>
+                    <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>No need to provide office space or equipment.</li>
+                    <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Enjoy a better work-life balance with more family time.</li>
+                </ul>
+                <p class="mt-8 text-center text-gray-700 text-lg font-medium">And the best part?</p>
+                <p class="mt-2 text-center text-gray-500 italic text-lg">
+                    There's no need to supply us with a desk, office space or even coffee!
+                </p>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section id="contact" class="container mx-auto px-6 py-20 scroll-to-target">
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 text-center">
+                <h2 class="text-4xl font-bold text-blue-900 mb-4">Ready to Save 10+ Hours This Week?</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Don't let admin tasks and follow-ups hold you back. For just $10/hour, get reliable, AI-powered VA support you can count on.
+                </p>
+                <div class="mt-8 space-y-4">
+                    <a href="mailto:siocon.janice@gmail.com" class="block text-blue-600 hover:underline text-lg font-medium">siocon.janice@gmail.com</a>
+                    <a href="https://www.linkedin.com/in/janicesiocon1218/" target="_blank" class="block text-blue-600 hover:underline text-lg font-medium">LinkedIn: Janice Siocon</a>
+                    <a href="https://wa.me/639955212679" target="_blank" class="block text-blue-600 hover:underline text-lg font-medium">WhatsApp +639955212679</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 text-center rounded-t-xl">
+        <p>&copy; 2025 AI-Powered Virtual Assistants. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
