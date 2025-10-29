@@ -207,5 +207,149 @@
             mobileMenu.classList.toggle('hidden');
         });
     </script>
+<!-- Floating AI Chatbot (Google AI Studio + Gemini API) -->
+<style>
+  #chatbot-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 26px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 9999;
+  }
+
+  #chatbox {
+    display: none;
+    position: fixed;
+    bottom: 100px;
+    right: 24px;
+    width: 320px;
+    height: 430px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    overflow: hidden;
+    flex-direction: column;
+    z-index: 9999;
+  }
+
+  #chatbox header {
+    background: #4f46e5;
+    color: white;
+    padding: 12px;
+    font-weight: bold;
+  }
+
+  #chat-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    font-size: 14px;
+  }
+
+  .msg {
+    margin: 6px 0;
+    padding: 8px 10px;
+    border-radius: 8px;
+    max-width: 80%;
+  }
+
+  .user { background: #e5e7eb; align-self: flex-end; }
+  .bot { background: #eef2ff; align-self: flex-start; }
+
+  #chat-input {
+    display: flex;
+    border-top: 1px solid #ddd;
+  }
+
+  #chat-input input {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    outline: none;
+  }
+
+  #chat-input button {
+    background: #4f46e5;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    cursor: pointer;
+  }
+</style>
+
+<button id="chatbot-btn">💬</button>
+
+<div id="chatbox">
+  <header>Ada • AI Assistant</header>
+  <div id="chat-messages"></div>
+  <div id="chat-input">
+    <input type="text" id="userInput" placeholder="Type your message..." />
+    <button id="sendBtn">Send</button>
+  </div>
+</div>
+
+<script>
+const API_KEY = "AIzaSyBvI11ZnLoOe4r8FMGfN3w-1EDALUg7cqg"; // 🔹 Replace with your Gemini API key
+const btn = document.getElementById("chatbot-btn");
+const box = document.getElementById("chatbox");
+const messages = document.getElementById("chat-messages");
+const input = document.getElementById("userInput");
+const sendBtn = document.getElementById("sendBtn");
+
+btn.onclick = () => box.style.display = box.style.display === "none" ? "flex" : "none";
+
+function addMessage(text, sender) {
+  const div = document.createElement("div");
+  div.className = `msg ${sender}`;
+  div.textContent = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+async function sendMessage() {
+  const userText = input.value.trim();
+  if (!userText) return;
+  addMessage(userText, "user");
+  input.value = "";
+
+  const prompt = `
+You are Ada, Janice’s AI assistant. Be warm and conversational.
+Introduce yourself briefly as “Hi! I’m Ada, Janice’s AI assistant. Want to learn more about her services?”
+Explain her AI-powered Virtual Assistant and automation services.
+If the user shows interest, ask politely for their name and email so Janice can follow up.
+`;
+
+  const body = {
+    contents: [{ role: "user", parts: [{ text: prompt + "\nUser: " + userText }] }]
+  };
+
+  try {
+    const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + API_KEY, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I didn’t catch that.";
+    addMessage(botReply, "bot");
+  } catch (err) {
+    addMessage("Error connecting to AI service.", "bot");
+  }
+}
+
+sendBtn.onclick = sendMessage;
+input.addEventListener("keypress", e => { if (e.key === "Enter") sendMessage(); });
+
+addMessage("Hi! I’m Ada, Janice’s AI assistant. Want to learn more about her services?", "bot");
+</script>
+
 </body>
 </html>
