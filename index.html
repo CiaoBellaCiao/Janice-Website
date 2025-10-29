@@ -314,13 +314,7 @@ function addMessage(text, sender) {
   messages.scrollTop = messages.scrollHeight;
 }
 
-async function sendMessage() {
-  const userText = input.value.trim();
-  if (!userText) return;
-  addMessage(userText, "user");
-  input.value = "";
-
-  const prompt = `
+const prompt = `
 You are Ada, Janice’s AI assistant.
 
 🎯 Your job:
@@ -360,32 +354,47 @@ $10 USD per hour — flexible, remote, and on-demand.
 “Hi there! 👋 I’m Ada, Janice’s AI assistant. Want a quick overview of her services?”
 `;
 
+async function sendMessage() {
+  const userText = input.value.trim();
+  if (!userText) return;
+  addMessage(userText, "user");
+  input.value = "";
+
   const body = {
-    contents: [{ role: "user", parts: [{ text: prompt + "\nUser: " + userText }] }]
+    contents: [
+      { role: "system", parts: [{ text: prompt }] },
+      { role: "user", parts: [{ text: userText }] }
+    ]
   };
 
   try {
-    const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + API_KEY, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body)
-    });
+    const res = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + API_KEY,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      }
+    );
     const data = await res.json();
-    const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I didn’t catch that.";
+    const botReply =
+      data.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "Hmm, I’m not sure about that — but I can connect you with Janice directly at siocon.janice@gmail.com!";
     addMessage(botReply, "bot");
   } catch (err) {
-    addMessage("Error connecting to AI service.", "bot");
+    addMessage("⚠️ There was an error connecting to the AI service.", "bot");
   }
 }
 
 sendBtn.onclick = sendMessage;
 input.addEventListener("keypress", e => { if (e.key === "Enter") sendMessage(); });
 
-addMessage("Hi! I’m Ada, Janice’s AI assistant. Want to learn more about her services?", "bot");
+addMessage("Hi there! 👋 I’m Ada, Janice’s AI assistant. Want a quick overview of her services?", "bot");
 </script>
 
 </body>
 </html>
+
 
 
 
