@@ -297,7 +297,7 @@
 </div>
 
 <script>
-const API_KEY = "AIzaSyBvI11ZnLoOe4r8FMGfN3w-1EDALUg7cqg"; // your Gemini API key
+const OPENAI_API_KEY = "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"; // Replace with your actual key
 const btn = document.getElementById("chatbot-btn");
 const box = document.getElementById("chatbox");
 const messages = document.getElementById("chat-messages");
@@ -309,29 +309,23 @@ btn.onclick = () => box.style.display = box.style.display === "none" ? "flex" : 
 function addMessage(text, sender) {
   const div = document.createElement("div");
   div.className = `msg ${sender}`;
-  div.textContent = text;
+  div.innerHTML = text.replace(/\n/g, "<br>");
   messages.appendChild(div);
   messages.scrollTop = messages.scrollHeight;
 }
 
-// ✅ Compact prompt so Gemini always keeps full context
+// Ada’s knowledge & tone
 const prompt = `
 You are Ada, Janice’s AI assistant for her AI-Powered Virtual Assistant services.
 
 About Janice:
 - She leads a 3-person AI-powered VA team from the Philippines.
-- Her team offers CRM, email, and calendar management; LinkedIn lead generation; project management; and automation using Zapier, Make, and Google Apps Script.
+- Her team offers CRM, email & calendar management, LinkedIn lead generation, project management, and automation using Zapier, Make, and Google Apps Script.
 - They use Zapier, Make (Integromat), Google Apps Script, ChatGPT, and Gemini daily.
-
-Pricing: $10 USD/hour — flexible, remote, and on-demand.
-
-Contact:
-📧 siocon.janice@gmail.com
-💼 linkedin.com/in/janicesiocon1218
-📱 WhatsApp: +639955212679
-
-Tone: Friendly, confident, short answers. 
-If unsure, say: “I’m not sure, but you can reach Janice at her email above.”
+- Pricing: $10 USD /hour — flexible, remote, and on-demand.
+- Contact: 📧 siocon.janice@gmail.com | 💼 linkedin.com/in/janicesiocon1218 | 📱 WhatsApp +639955212679
+Tone: Warm, friendly, concise, professional.
+If unsure, say: "I’m not sure about that, but you can reach Janice directly at siocon.janice@gmail.com."
 `;
 
 async function sendMessage() {
@@ -340,27 +334,26 @@ async function sendMessage() {
   addMessage(userText, "user");
   input.value = "";
 
-  // ✅ simplified free-tier structure
-  const body = {
-    contents: [{
-      role: "user",
-      parts: [{ text: prompt + "\nUser: " + userText + "\nAda:" }]
-    }]
-  };
+  const messagesForAPI = [
+    { role: "system", content: prompt },
+    { role: "user", content: userText }
+  ];
 
   try {
-    const res = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=" + API_KEY,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      }
-    );
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: messagesForAPI,
+        temperature: 0.7
+      })
+    });
     const data = await res.json();
-    const botReply =
-      data.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "Hmm, I’m not sure, but you can reach Janice at siocon.janice@gmail.com.";
+    const botReply = data.choices?.[0]?.message?.content || "Sorry, I couldn’t process that.";
     addMessage(botReply, "bot");
   } catch (err) {
     addMessage("⚠️ There was an error connecting to the AI service.", "bot");
@@ -370,11 +363,13 @@ async function sendMessage() {
 sendBtn.onclick = sendMessage;
 input.addEventListener("keypress", e => { if (e.key === "Enter") sendMessage(); });
 
+// First message
 addMessage("Hi there! 👋 I’m Ada, Janice’s AI assistant. Want a quick overview of her services?", "bot");
 </script>
 
 </body>
 </html>
+
 
 
 
