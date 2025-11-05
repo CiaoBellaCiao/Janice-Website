@@ -496,17 +496,40 @@ async function sendMessage() {
     const result = await fetchWithRetry(apiUrl, options);
     removeLoading(loadingElement);
 
-    if (result && result.candidates?.[0]?.content?.parts?.[0]?.text) {
-      const botReply = result.candidates[0].content.parts[0].text;
-      addMessage(botReply, "bot");
-      // Add bot reply to history
-      chatHistory.push({ role: "model", parts: [{ text: botReply }] });
+    if (!result) {
+        // 0. Network Error: fetchWithRetry failed completely
+        addMessage("⚠️ Sorry, there was a network error connecting to the AI service. Please check your connection and try again.", "bot");
+        return;
+    }
+
+    if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+        // 1. Happy path: We got a valid response
+        const botReply = result.candidates[0].content.parts[0].text;
+        addMessage(botReply, "bot");
+        // Add bot reply to history
+        chatHistory.push({ role: "model", parts: [{ text: botReply }] });
+    } else if (result.promptFeedback) {
+        // 2. Safety/Block: The API blocked the prompt or response
+        const feedback = result.promptFeedback;
+        let reason = "Your request was blocked for safety reasons.";
+        if (feedback.blockReason) {
+            reason = `Your request was blocked: ${feedback.blockReason}`;
+        } else if (feedback.safetyRatings?.length > 0) {
+            reason = `Your request was flagged for: ${feedback.safetyRatings.map(r => r.category).join(", ")}`;
+        }
+        addMessage(`⚠️ ${reason}`, "bot");
+    } else if (result.error) {
+        // 3. API Error: The API returned a 200 OK but with an error message
+        addMessage(`⚠️ API Error: ${result.error.message}`, "bot");
     } else {
-      addMessage("⚠️ Sorry, I couldn't process that. Please try again.", "bot");
+        // 4. Unknown Error: The response structure is unexpected
+        console.error("Unexpected API response:", result); // Log for debugging
+        addMessage("⚠️ Sorry, I couldn't process that. The API returned an unexpected response.", "bot");
     }
   } catch (err) {
     removeLoading(loadingElement);
-    addMessage("⚠️ There was an error connecting to the AI service.", "bot");
+    console.error("Error in sendMessage logic:", err);
+    addMessage("⚠️ An internal error occurred in the chatbot script.", "bot");
   }
 }
 
