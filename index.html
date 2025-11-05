@@ -15,8 +15,110 @@
         .scroll-to-target {
             scroll-margin-top: 5rem;
         }
-        .blue-gradient {
-            background: linear-gradient(135deg, #a5f3fc 0%, #bfdbfe 100%);
+        /* Floating AI Chatbot Styles */
+        #chatbot-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 26px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transition: transform 0.2s;
+        }
+        #chatbot-btn:hover {
+            transform: scale(1.05);
+        }
+        #chatbox {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            width: 320px;
+            height: 430px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            overflow: hidden;
+            flex-direction: column;
+            z-index: 9999;
+        }
+        #chatbox header {
+            background: #4f46e5;
+            color: white;
+            padding: 12px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #chat-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+        }
+        .msg {
+            margin: 6px 0;
+            padding: 8px 10px;
+            border-radius: 8px;
+            max-width: 80%;
+            line-height: 1.4;
+        }
+        .user { 
+            background: #e5e7eb; 
+            align-self: flex-end; 
+            border-bottom-right-radius: 2px;
+        }
+        .bot { 
+            background: #eef2ff; 
+            align-self: flex-start; 
+            border-bottom-left-radius: 2px;
+        }
+        .loading-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            margin: 0 1px;
+            border-radius: 50%;
+            background-color: #4f46e5;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+        }
+
+        #chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        #chat-input input {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            outline: none;
+        }
+
+        #chat-input button {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -59,11 +161,11 @@
                 </p>
             </div>
             <div class="md:w-1/2 mt-10 md:mt-0 flex justify-center">
-                <img src="https://drive.google.com/thumbnail?id=1bZOpv-_c8E6pEcCSKGhnsNmZxUuFqNPT&sz=w1200"
+                <img src="https://placehold.co/320x320/e5e7eb/4b5563?text=Janice+Siocon"
      alt="Janice Siocon"
      loading="lazy"
-     onerror="this.src='https://placehold.co/320x320/e0e0e0/666?text=Janice+S.';"
-     class="rounded-2xl shadow-xl w-64 h-64 md:w-80 md:h-80 object-cover bg-gray-200">
+     class="rounded-2xl shadow-xl w-64 h-64 md:w-80 md:h-80 object-cover bg-gray-200"
+     onerror="this.onerror=null;this.src='https://placehold.co/320x320/e5e7eb/4b5563?text=Janice+Siocon';">
             </div>
         </section>
 
@@ -77,7 +179,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Email & Calendar Management -->
-                    <div class="p-6 rounded-2xl border border-gray-200">
+                    <div class="p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition duration-300">
                         <h3 class="text-2xl font-semibold text-blue-800 mb-3">Email & Calendar Management</h3>
                         <ul class="text-gray-600 space-y-2">
                             <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Organize inboxes, prioritize replies, and keep you on top of key communication.</li>
@@ -85,7 +187,7 @@
                         </ul>
                     </div>
                     <!-- Project & Operations Management -->
-                    <div class="p-6 rounded-2xl border border-gray-200">
+                    <div class="p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition duration-300">
                         <h3 class="text-2xl font-semibold text-blue-800 mb-3">Project & Operations Management</h3>
                         <ul class="text-gray-600 space-y-2">
                             <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Manage ongoing projects and tasks across tools.</li>
@@ -93,7 +195,7 @@
                         </ul>
                     </div>
                     <!-- Lead Generation (LinkedIn Sales Navigator) -->
-                    <div class="p-6 rounded-2xl border border-gray-200">
+                    <div class="p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition duration-300">
                         <h3 class="text-2xl font-semibold text-blue-800 mb-3">Lead Generation (LinkedIn Sales Navigator)</h3>
                         <ul class="text-gray-600 space-y-2">
                             <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Research and qualify leads.</li>
@@ -101,7 +203,7 @@
                         </ul>
                     </div>
                     <!-- Cold Email Outreach -->
-                    <div class="p-6 rounded-2xl border border-gray-200">
+                    <div class="p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition duration-300">
                         <h3 class="text-2xl font-semibold text-blue-800 mb-3">Cold Email Outreach</h3>
                         <ul class="text-gray-600 space-y-2">
                             <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Run targeted outreach campaigns.</li>
@@ -109,7 +211,7 @@
                         </ul>
                     </div>
                     <!-- Customer Support & Follow-Ups -->
-                    <div class="p-6 rounded-2xl border border-gray-200">
+                    <div class="p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition duration-300">
                         <h3 class="text-2xl font-semibold text-blue-800 mb-3">Customer Support & Follow-Ups</h3>
                         <ul class="text-gray-600 space-y-2">
                             <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Handle client communication via email.</li>
@@ -117,7 +219,7 @@
                         </ul>
                     </div>
                     <!-- Website Chatbot Setup -->
-                    <div class="p-6 rounded-2xl border border-gray-200">
+                    <div class="p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition duration-300">
                         <h3 class="text-2xl font-semibold text-blue-800 mb-3">Website Chatbot Setup</h3>
                         <ul class="text-gray-600 space-y-2">
                             <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Build and integrate chatbots to capture leads directly on your website.</li>
@@ -125,7 +227,7 @@
                         </ul>
                     </div>
                     <!-- LinkedIn Management (Company & Personal) -->
-                    <div class="p-6 rounded-2xl border border-gray-200">
+                    <div class="p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition duration-300">
                         <h3 class="text-2xl font-semibold text-blue-800 mb-3">LinkedIn Management (Company & Personal)</h3>
                         <ul class="text-gray-600 space-y-2">
                             <li class="flex items-start"><svg class="w-5 h-5 mr-2 mt-1 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Plan and schedule content that builds brand presence.</li>
@@ -148,7 +250,7 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- Why Hire Section -->
         <section id="why-hire" class="container mx-auto px-6 py-20 scroll-to-target">
             <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
@@ -167,46 +269,47 @@
             </div>
         </section>
 
-        <!-- Call to Action Section -->
+        <!-- Call to Action (Contact) Section -->
         <section id="contact" class="container mx-auto px-6 py-20 scroll-to-target">
-            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 text-center">
-                <h2 class="text-4xl font-bold text-blue-900 mb-4">Ready to Save 10+ Hours This Week?</h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Don't let admin tasks and follow-ups hold you back. For just $10/hour, get reliable, AI-powered VA support you can count on.
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                <h2 class="text-4xl font-bold text-blue-900 mb-4 text-center">Ready to Save 10+ Hours This Week?</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto text-center">
+                    Don't let admin tasks and follow-ups hold you back. Send us a message below to start a conversation.
                 </p>
                 
-                <!-- Contact Form -->
-                <form action="https://formspree.io/f/mpwovqzv" method="POST" class="mt-12 max-w-xl mx-auto text-left">
-                    <input type="hidden" name="_subject" value="AI-Powered VA Inquiry">
-                    <div class="space-y-6">
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                            <div class="mt-1">
-                                <input type="text" name="name" id="name" required class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3">
-                            </div>
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                            <div class="mt-1">
-                                <input type="email" name="email" id="email" required class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3">
-                            </div>
-                        </div>
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
-                            <div class="mt-1">
-                                <textarea id="message" name="message" rows="4" required class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3"></textarea>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-300">
-                                Send Message
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                <div class="mt-8 max-w-lg mx-auto">
+                    <!-- Formspree Form Submission (No Email Client Popup) -->
+                    <!-- ⚠️ REMINDER: Change YOUR_FORM_ID_HERE to your actual Formspree ID -->
+                    <form action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST" class="space-y-4">
+                        <input type="hidden" name="_subject" value="AI-Powered VA Inquiry">
 
-                <div class="mt-12 border-t pt-8 space-y-4">
-                    <p class="text-lg font-medium text-gray-700">Or reach out directly:</p>
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
+                            <input type="text" name="name" id="name" required 
+                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 border">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Your Email</label>
+                            <input type="email" name="_replyto" id="email" required 
+                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 border">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700">Message / Inquiry Details</label>
+                            <textarea id="message" name="message" rows="4" required 
+                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 border"></textarea>
+                        </div>
+                        
+                        <button type="submit" 
+                            class="w-full py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <div class="mt-12 space-y-4 text-center">
+                    <h3 class="text-2xl font-bold text-blue-800">Or Reach Out Directly</h3>
                     <a href="mailto:siocon.janice@gmail.com" class="block text-blue-600 hover:underline text-lg font-medium">siocon.janice@gmail.com</a>
                     <a href="https://www.linkedin.com/in/janicesiocon1218/" target="_blank" class="block text-blue-600 hover:underline text-lg font-medium">LinkedIn: Janice Siocon</a>
                     <a href="https://wa.me/639955212679" target="_blank" class="block text-blue-600 hover:underline text-lg font-medium">WhatsApp +639955212679</a>
@@ -221,17 +324,57 @@
         <p>&copy; 2025 AI-Powered Virtual Assistants. All rights reserved.</p>
     </footer>
 
+    <!-- Floating AI Chatbot Button -->
+    <button id="chatbot-btn">💬</button>
+
+    <!-- Chatbox UI -->
+    <div id="chatbox">
+        <header>Ada • AI Assistant</header>
+        <div id="chat-messages"></div>
+        <div id="chat-input">
+            <input type="text" id="userInput" placeholder="Type your message..." />
+            <button id="sendBtn">Send</button>
+        </div>
+    </div>
+
     <script>
+        // === Utility Functions ===
+        // Exponential backoff retry mechanism for API calls
+        async function fetchWithRetry(url, options, maxRetries = 3) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        return result;
+                    } else if (response.status === 429) {
+                        // Too many requests, wait longer
+                        console.warn(`Rate limit hit. Retrying in ${2 ** i}s...`);
+                        await new Promise(resolve => setTimeout(resolve, (2 ** i) * 1000));
+                    } else if (response.status === 400 || response.status === 403) {
+                         // API Key invalid or permissions error (Fatal)
+                        return { error: { message: `API rejected request with status ${response.status}. Check API Key or permissions.` } };
+                    } else {
+                        // Other server error (Fatal)
+                        return { error: { message: `Server error: ${response.status} ${response.statusText}` } };
+                    }
+                } catch (error) {
+                    console.error(`Attempt ${i + 1} failed:`, error);
+                    if (i === maxRetries - 1) throw error; // Re-throw on last attempt
+                    await new Promise(resolve => setTimeout(resolve, (2 ** i) * 1000));
+                }
+            }
+        }
+
+        // === Navigation & Mobile Menu Logic ===
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const targetElement = document.querySelector(this.getAttribute('href'));
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
 
@@ -239,130 +382,26 @@
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
-    </script>
-<!-- Floating AI Chatbot (Google AI Studio + Gemini API) -->
-<style>
-  #chatbot-btn {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: #4f46e5;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    font-size: 26px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
-  #chatbox {
-    display: none;
-    position: fixed;
-    bottom: 100px;
-    right: 24px;
-    width: 320px;
-    height: 430px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    overflow: hidden;
-    flex-direction: column;
-    z-index: 9999;
-  }
+        // === Gemini API Chatbot Logic ===
 
-  #chatbox header {
-    background: #4f46e5;
-    color: white;
-    padding: 12px;
-    font-weight: bold;
-    text-align: center;
-  }
+        const btn = document.getElementById("chatbot-btn");
+        const box = document.getElementById("chatbox");
+        const messages = document.getElementById("chat-messages");
+        const input = document.getElementById("userInput");
+        const sendBtn = document.getElementById("sendBtn");
 
-  #chat-messages {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    font-size: 14px;
-    display: flex;
-    flex-direction: column;
-  }
+        // ⚠️ SECURITY WARNING: This API Key is exposed to the public internet because it is in a front-end file.
+        // Please use a server-side proxy or an environment variable for production.
+        const apiKey = "AIzaSyBvI11ZnLoOe4r8FMGfN3w-1EDALUg7cqg"; // <-- INJECTED KEY FOR LIVE TESTING
+        const model = "gemini-2.5-flash-preview-09-2025";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-  .msg {
-    margin: 6px 0;
-    padding: 8px 10px;
-    border-radius: 8px;
-    max-width: 80%;
-    line-height: 1.5;
-  }
-
-  .user { background: #e5e7eb; align-self: flex-end; }
-  .bot { background: #eef2ff; align-self: flex-start; }
-  .bot.loading { 
-    background: #eef2ff; 
-    align-self: flex-start; 
-    color: #666;
-    font-style: italic;
-  }
-
-  #chat-input {
-    display: flex;
-    border-top: 1px solid #ddd;
-  }
-
-  #chat-input input {
-    flex: 1;
-    border: none;
-    padding: 10px;
-    outline: none;
-  }
-
-  #chat-input button {
-    background: #4f46e5;
-    color: white;
-    border: none;
-    padding: 10px 14px;
-    cursor: pointer;
-  }
-</style>
-
-<button id="chatbot-btn">💬</button>
-
-<div id="chatbox">
-  <header>Ada • AI Assistant</header>
-  <div id="chat-messages"></div>
-  <div id="chat-input">
-    <input type="text" id="userInput" placeholder="Type your message..." />
-    <button id="sendBtn">Send</button>
-  </div>
-</div>
-
-<script>
-// === Gemini API Chatbot Logic ===
-
-const btn = document.getElementById("chatbot-btn");
-const box = document.getElementById("chatbox");
-const messages = document.getElementById("chat-messages");
-const input = document.getElementById("userInput");
-const sendBtn = document.getElementById("sendBtn");
-
-// Gemini API Configuration
-const apiKey = ""; // Leave as-is, will be handled by the environment
-const model = "gemini-2.5-flash-preview-09-2025";
-const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-
-// Ada’s knowledge & tone (System Prompt)
-const systemPrompt = `
+        // Ada’s knowledge & tone (System Prompt)
+        const systemPrompt = `
 You are Ada, Janice’s AI assistant for her AI-Powered Virtual Assistant services.
 Your role is to answer questions *only* based on the information provided below. Do not make up information.
 If the answer is not in this context, politely say: "I’m not sure about that, but you can reach Janice directly at siocon.janice@gmail.com."
@@ -406,143 +445,114 @@ If the answer is not in this context, politely say: "I’m not sure about that, 
 - You must be warm, friendly, concise, and professional.
 `;
 
-let chatHistory = []; // To store the conversation
+        let chatHistory = []; // To store the conversation
 
-// Toggle chatbox visibility
-btn.onclick = () => {
-    box.style.display = box.style.display === "none" ? "flex" : "none";
-};
+        btn.onclick = () => box.style.display = box.style.display === "none" ? "flex" : "none";
 
-// Add a message to the chat UI
-function addMessage(text, sender) {
-  const div = document.createElement("div");
-  div.className = `msg ${sender}`;
-  // A simple way to render newlines
-  div.innerHTML = text.replace(/\n/g, "<br>");
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-  return div; // Return the element for potential updates (e.g., loading)
-}
-
-// Add a loading indicator
-function showLoading() {
-    return addMessage("Thinking...", "bot loading");
-}
-
-// Remove the loading indicator
-function removeLoading(loadingElement) {
-    if (loadingElement) {
-        messages.removeChild(loadingElement);
-    }
-}
-
-// Exponential backoff retry function
-async function fetchWithRetry(url, options, retries = 3, delay = 1000) {
-    for (let i = 0; i < retries; i++) {
-        try {
-            const response = await fetch(url, options);
-            if (response.status === 429) { // Too Many Requests
-                throw new Error('Rate limited');
+        function addMessage(text, sender, isHtml = false) {
+            const div = document.createElement("div");
+            div.className = `msg ${sender}`;
+            if (isHtml) {
+                div.innerHTML = text;
+            } else {
+                div.innerHTML = text.replace(/\n/g, "<br>");
             }
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return await response.json();
-        } catch (error) {
-            if (i === retries - 1) {
-                console.error("Chatbot API call failed after retries:", error);
-                return null; // Failed after all retries
-            }
-            // Do not log retry attempts to the console as errors
-            await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)));
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
         }
-    }
-}
 
-// Send message to Gemini API
-async function sendMessage() {
-  const userText = input.value.trim();
-  if (!userText) return;
-
-  addMessage(userText, "user");
-  input.value = "";
-  const loadingElement = showLoading();
-
-  // Add user message to history
-  chatHistory.push({ role: "user", parts: [{ text: userText }] });
-
-  const payload = {
-    contents: chatHistory,
-    systemInstruction: {
-      parts: [{ text: systemPrompt }],
-    },
-    generationConfig: {
-      temperature: 0.7,
-      topK: 1,
-      topP: 1,
-      maxOutputTokens: 2048,
-    },
-  };
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  };
-
-  try {
-    const result = await fetchWithRetry(apiUrl, options);
-    removeLoading(loadingElement);
-
-    if (!result) {
-        // 0. Network Error: fetchWithRetry failed completely
-        addMessage("⚠️ Sorry, there was a network error connecting to the AI service. Please check your connection and try again.", "bot");
-        return;
-    }
-
-    if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-        // 1. Happy path: We got a valid response
-        const botReply = result.candidates[0].content.parts[0].text;
-        addMessage(botReply, "bot");
-        // Add bot reply to history
-        chatHistory.push({ role: "model", parts: [{ text: botReply }] });
-    } else if (result.promptFeedback) {
-        // 2. Safety/Block: The API blocked the prompt or response
-        const feedback = result.promptFeedback;
-        let reason = "Your request was blocked for safety reasons.";
-        if (feedback.blockReason) {
-            reason = `Your request was blocked: ${feedback.blockReason}`;
-        } else if (feedback.safetyRatings?.length > 0) {
-            reason = `Your request was flagged for: ${feedback.safetyRatings.map(r => r.category).join(", ")}`;
+        function createLoading() {
+            const loadingElement = document.createElement("div");
+            loadingElement.className = "msg bot flex items-center space-x-1";
+            loadingElement.id = "loading-indicator";
+            loadingElement.innerHTML = `
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+            `;
+            messages.appendChild(loadingElement);
+            messages.scrollTop = messages.scrollHeight;
+            return loadingElement;
         }
-        addMessage(`⚠️ ${reason}`, "bot");
-    } else if (result.error) {
-        // 3. API Error: The API returned a 200 OK but with an error message
-        addMessage(`⚠️ API Error: ${result.error.message}`, "bot");
-    } else {
-        // 4. Unknown Error: The response structure is unexpected
-        console.error("Unexpected API response:", result); // Log for debugging
-        addMessage("⚠️ Sorry, I couldn't process that. The API returned an unexpected response.", "bot");
-    }
-  } catch (err) {
-    removeLoading(loadingElement);
-    console.error("Error in sendMessage logic:", err);
-    addMessage("⚠️ An internal error occurred in the chatbot script.", "bot");
-  }
-}
 
-// Event listeners
-sendBtn.onclick = sendMessage;
-input.addEventListener("keypress", e => { if (e.key === "Enter") sendMessage(); });
+        function removeLoading(loadingElement) {
+            if (loadingElement && loadingElement.parentNode) {
+                loadingElement.parentNode.removeChild(loadingElement);
+            }
+        }
 
-// First message
-window.onload = () => {
-    addMessage("Hi there! 👋 I’m Ada, Janice’s AI assistant. Want a quick overview of her services?", "bot");
-};
+        async function sendMessage() {
+            const userText = input.value.trim();
+            if (!userText) return;
 
-</script>
+            addMessage(userText, "user");
+            input.value = "";
+
+            // Add user message to history
+            chatHistory.push({ role: "user", parts: [{ text: userText }] });
+
+            const loadingElement = createLoading();
+
+            const payload = {
+                contents: chatHistory,
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                }
+            };
+
+            const options = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            };
+
+            try {
+                const result = await fetchWithRetry(apiUrl, options);
+                removeLoading(loadingElement);
+
+                if (!result) {
+                    // 0. Network Error: fetchWithRetry failed completely (after retries)
+                    addMessage("⚠️ Sorry, there was a network error connecting to the AI service. Please check your connection and try again.", "bot");
+                    return;
+                }
+
+                if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+                    // 1. Happy path: We got a valid response
+                    const botReply = result.candidates[0].content.parts[0].text;
+                    addMessage(botReply, "bot");
+                    // Add bot reply to history
+                    chatHistory.push({ role: "model", parts: [{ text: botReply }] });
+                } else if (result.promptFeedback) {
+                    // 2. Safety/Block: The API blocked the prompt or response
+                    const feedback = result.promptFeedback;
+                    let reason = "Your request was blocked for safety reasons.";
+                    if (feedback.blockReason) {
+                        reason = `Your request was blocked: ${feedback.blockReason}`;
+                    } else if (feedback.safetyRatings?.length > 0) {
+                        reason = `Your request was flagged for: ${feedback.safetyRatings.map(r => r.category).join(", ")}`;
+                    }
+                    addMessage(`⚠️ ${reason}`, "bot");
+                } else if (result.error) {
+                    // 3. API Error: The API returned an error message
+                    addMessage(`⚠️ API Error: ${result.error.message}`, "bot");
+                } else {
+                    // 4. Unknown Error: The response structure is unexpected
+                    console.error("Unexpected API response:", result);
+                    addMessage("⚠️ Sorry, I couldn't process that. The API returned an unexpected response structure.", "bot");
+                }
+            } catch (err) {
+                removeLoading(loadingElement);
+                console.error("Error in sendMessage logic:", err);
+                addMessage("⚠️ An internal error occurred in the chatbot script. Check console for details.", "bot");
+            }
+        }
+
+        sendBtn.onclick = sendMessage;
+        input.addEventListener("keypress", e => { if (e.key === "Enter") sendMessage(); });
+
+        // First message
+        addMessage("Hi there! 👋 I’m Ada, Janice’s AI assistant. Want a quick overview of her services?", "bot");
+    </script>
 
 </body>
 </html>
