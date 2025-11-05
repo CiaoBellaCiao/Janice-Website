@@ -161,11 +161,15 @@
                 </p>
             </div>
             <div class="md:w-1/2 mt-10 md:mt-0 flex justify-center">
-                <img src="https://placehold.co/320x320/e5e7eb/4b5563?text=Janice+Siocon"
-     alt="Janice Siocon"
-     loading="lazy"
-     class="rounded-2xl shadow-xl w-64 h-64 md:w-80 md:h-80 object-cover bg-gray-200"
-     onerror="this.onerror=null;this.src='https://placehold.co/320x320/e5e7eb/4b5563?text=Janice+Siocon';">
+                <!-- 
+                    *** IMAGE FIX - PLEASE REPLACE THIS URL WITH YOUR PHOTO'S DIRECT LINK ***
+                    e.g., <img src="https://i.imgur.com/your-image.jpg" ...
+                -->
+                <img src="https://drive.google.com/thumbnail?id=1bZOpv-_c8E6pEcCSKGhnsNmZxUuFqNPT&sz=w1200"
+                    alt="Janice Siocon Profile Photo"
+                    loading="lazy"
+                    class="rounded-2xl shadow-xl w-64 h-64 md:w-80 md:h-80 object-cover bg-gray-200"
+                    onerror="this.onerror=null;this.src='https://placehold.co/320x320/e5e7eb/4b5563?text=Janice+Siocon';">
             </div>
         </section>
 
@@ -278,9 +282,11 @@
                 </p>
                 
                 <div class="mt-8 max-w-lg mx-auto">
-                    <!-- Formspree Form Submission (No Email Client Popup) -->
-                    <!-- ⚠️ REMINDER: Change YOUR_FORM_ID_HERE to your actual Formspree ID -->
-                    <form action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST" class="space-y-4">
+                    <!-- 
+                        *** FORM FIX - YOU MUST REPLACE "YOUR_FORM_ID_HERE" WITH YOUR ACTUAL FORMSPREE ID ***
+                        e.g., action="https://formspree.io/f/f-my-actual-id"
+                    -->
+                    <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST" class="space-y-4">
                         <input type="hidden" name="_subject" value="AI-Powered VA Inquiry">
 
                         <div>
@@ -300,8 +306,11 @@
                             <textarea id="message" name="message" rows="4" required 
                                 class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 border"></textarea>
                         </div>
+
+                        <!-- Feedback Message Area -->
+                        <div id="form-feedback" role="alert" class="p-3 rounded-lg text-center font-medium hidden"></div>
                         
-                        <button type="submit" 
+                        <button type="submit" id="submitButton"
                             class="w-full py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300">
                             Send Message
                         </button>
@@ -386,6 +395,69 @@
             mobileMenu.classList.toggle('hidden');
         });
 
+
+        // === Contact Form Submission Logic ===
+        const contactForm = document.getElementById('contactForm');
+        const submitButton = document.getElementById('submitButton');
+        const formFeedback = document.getElementById('form-feedback');
+
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            formFeedback.classList.add('hidden'); // Clear previous message
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+
+            // IMPORTANT: Get the action URL from the form element
+            const formUrl = this.action; 
+
+            // Check if the placeholder ID is still there
+            if (formUrl.includes("https://formspree.io/f/mpwovqzv")) {
+                formFeedback.textContent = "❌ Error: Please replace 'YOUR_FORM_ID_HERE' in the code with your actual Formspree endpoint.";
+                formFeedback.classList.remove('bg-green-100', 'text-green-800');
+                formFeedback.classList.add('bg-red-100', 'text-red-800', 'block');
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Message';
+                formFeedback.classList.remove('hidden');
+                return;
+            }
+
+            const data = new FormData(e.target);
+            
+            try {
+                const response = await fetch(formUrl, {
+                    method: 'POST',
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    formFeedback.textContent = '✅ Message sent successfully! We will get back to you shortly.';
+                    formFeedback.classList.remove('bg-red-100', 'text-red-800');
+                    formFeedback.classList.add('bg-green-100', 'text-green-800', 'block');
+                    contactForm.reset(); // Clear the form
+                } else {
+                    // Formspree returns an error response (e.g., server error)
+                    const result = await response.json();
+                    let message = result.error ? result.error : 'An unknown error occurred. Please try again or email us directly.';
+                    formFeedback.textContent = `❌ Submission Error: ${message}`;
+                    formFeedback.classList.remove('bg-green-100', 'text-green-800');
+                    formFeedback.classList.add('bg-red-100', 'text-red-800', 'block');
+                }
+            } catch (error) {
+                // Network failure
+                formFeedback.textContent = '❌ Network Error: Could not reach the server. Check your connection.';
+                formFeedback.classList.remove('bg-green-100', 'text-green-800');
+                formFeedback.classList.add('bg-red-100', 'text-red-800', 'block');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Message';
+                formFeedback.classList.remove('hidden');
+            }
+        });
+
+
         // === Gemini API Chatbot Logic ===
 
         const btn = document.getElementById("chatbot-btn");
@@ -394,9 +466,8 @@
         const input = document.getElementById("userInput");
         const sendBtn = document.getElementById("sendBtn");
 
-        // ⚠️ SECURITY WARNING: This API Key is exposed to the public internet because it is in a front-end file.
-        // Please use a server-side proxy or an environment variable for production.
-        const apiKey = "AIzaSyBvI11ZnLoOe4r8FMGfN3w-1EDALUg7cqg"; // <-- INJECTED KEY FOR LIVE TESTING
+        // ⚠️ API Key: This is being used for your live test environment. 
+        const apiKey = "AIzaSyBvI11ZnLoOe4r8FMGfN3w-1EDALUg7cqg";
         const model = "gemini-2.5-flash-preview-09-2025";
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
