@@ -62,6 +62,7 @@
                 <img src="https://drive.google.com/thumbnail?id=1bZOpv-_c8E6pEcCSKGhnsNmZxUuFqNPT&sz=w1200"
      alt="Janice Siocon"
      loading="lazy"
+     onerror="this.src='https://placehold.co/320x320/e0e0e0/666?text=Janice+S.';"
      class="rounded-2xl shadow-xl w-64 h-64 md:w-80 md:h-80 object-cover bg-gray-200">
             </div>
         </section>
@@ -173,7 +174,38 @@
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
                     Don't let admin tasks and follow-ups hold you back. For just $10/hour, get reliable, AI-powered VA support you can count on.
                 </p>
-                <div class="mt-8 space-y-4">
+                
+                <!-- Contact Form -->
+                <form action="mailto:siocon.janice@gmail.com" method="POST" enctype="text/plain" class="mt-12 max-w-xl mx-auto text-left">
+                    <div class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                            <div class="mt-1">
+                                <input type="text" name="Name" id="name" required class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            <div class="mt-1">
+                                <input type="email" name="Email" id="email" required class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                            <div class="mt-1">
+                                <textarea id="message" name="Message" rows="4" required class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3"></textarea>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-300">
+                                Send Message
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="mt-12 border-t pt-8 space-y-4">
+                    <p class="text-lg font-medium text-gray-700">Or reach out directly:</p>
                     <a href="mailto:siocon.janice@gmail.com" class="block text-blue-600 hover:underline text-lg font-medium">siocon.janice@gmail.com</a>
                     <a href="https://www.linkedin.com/in/janicesiocon1218/" target="_blank" class="block text-blue-600 hover:underline text-lg font-medium">LinkedIn: Janice Siocon</a>
                     <a href="https://wa.me/639955212679" target="_blank" class="block text-blue-600 hover:underline text-lg font-medium">WhatsApp +639955212679</a>
@@ -193,9 +225,12 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
 
@@ -203,9 +238,11 @@
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
     </script>
 <!-- Floating AI Chatbot (Google AI Studio + Gemini API) -->
 <style>
@@ -223,6 +260,9 @@
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   #chatbox {
@@ -245,6 +285,7 @@
     color: white;
     padding: 12px;
     font-weight: bold;
+    text-align: center;
   }
 
   #chat-messages {
@@ -252,6 +293,8 @@
     padding: 10px;
     overflow-y: auto;
     font-size: 14px;
+    display: flex;
+    flex-direction: column;
   }
 
   .msg {
@@ -259,10 +302,17 @@
     padding: 8px 10px;
     border-radius: 8px;
     max-width: 80%;
+    line-height: 1.5;
   }
 
   .user { background: #e5e7eb; align-self: flex-end; }
   .bot { background: #eef2ff; align-self: flex-start; }
+  .bot.loading { 
+    background: #eef2ff; 
+    align-self: flex-start; 
+    color: #666;
+    font-style: italic;
+  }
 
   #chat-input {
     display: flex;
@@ -297,25 +347,21 @@
 </div>
 
 <script>
-const OPENAI_API_KEY = "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"; // Replace with your actual key
+// === Gemini API Chatbot Logic ===
+
 const btn = document.getElementById("chatbot-btn");
 const box = document.getElementById("chatbox");
 const messages = document.getElementById("chat-messages");
 const input = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
 
-btn.onclick = () => box.style.display = box.style.display === "none" ? "flex" : "none";
+// Gemini API Configuration
+const apiKey = ""; // Leave as-is, will be handled by the environment
+const model = "gemini-2.5-flash-preview-09-2025";
+const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-function addMessage(text, sender) {
-  const div = document.createElement("div");
-  div.className = `msg ${sender}`;
-  div.innerHTML = text.replace(/\n/g, "<br>");
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-}
-
-// Ada’s knowledge & tone
-const prompt = `
+// Ada’s knowledge & tone (System Prompt)
+const systemPrompt = `
 You are Ada, Janice’s AI assistant for her AI-Powered Virtual Assistant services.
 
 About Janice:
@@ -328,54 +374,120 @@ Tone: Warm, friendly, concise, professional.
 If unsure, say: "I’m not sure about that, but you can reach Janice directly at siocon.janice@gmail.com."
 `;
 
+let chatHistory = []; // To store the conversation
+
+// Toggle chatbox visibility
+btn.onclick = () => {
+    box.style.display = box.style.display === "none" ? "flex" : "none";
+};
+
+// Add a message to the chat UI
+function addMessage(text, sender) {
+  const div = document.createElement("div");
+  div.className = `msg ${sender}`;
+  // A simple way to render newlines
+  div.innerHTML = text.replace(/\n/g, "<br>");
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+  return div; // Return the element for potential updates (e.g., loading)
+}
+
+// Add a loading indicator
+function showLoading() {
+    return addMessage("Thinking...", "bot loading");
+}
+
+// Remove the loading indicator
+function removeLoading(loadingElement) {
+    if (loadingElement) {
+        messages.removeChild(loadingElement);
+    }
+}
+
+// Exponential backoff retry function
+async function fetchWithRetry(url, options, retries = 3, delay = 1000) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await fetch(url, options);
+            if (response.status === 429) { // Too Many Requests
+                throw new Error('Rate limited');
+            }
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            if (i === retries - 1) {
+                console.error("Chatbot API call failed after retries:", error);
+                return null; // Failed after all retries
+            }
+            // Do not log retry attempts to the console as errors
+            await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)));
+        }
+    }
+}
+
+// Send message to Gemini API
 async function sendMessage() {
   const userText = input.value.trim();
   if (!userText) return;
+
   addMessage(userText, "user");
   input.value = "";
+  const loadingElement = showLoading();
 
-  const messagesForAPI = [
-    { role: "system", content: prompt },
-    { role: "user", content: userText }
-  ];
+  // Add user message to history
+  chatHistory.push({ role: "user", parts: [{ text: userText }] });
+
+  const payload = {
+    contents: chatHistory,
+    systemInstruction: {
+      parts: [{ text: systemPrompt }],
+    },
+    generationConfig: {
+      temperature: 0.7,
+      topK: 1,
+      topP: 1,
+      maxOutputTokens: 2048,
+    },
+  };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  };
 
   try {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: messagesForAPI,
-        temperature: 0.7
-      })
-    });
-    const data = await res.json();
-    const botReply = data.choices?.[0]?.message?.content || "Sorry, I couldn’t process that.";
-    addMessage(botReply, "bot");
+    const result = await fetchWithRetry(apiUrl, options);
+    removeLoading(loadingElement);
+
+    if (result && result.candidates?.[0]?.content?.parts?.[0]?.text) {
+      const botReply = result.candidates[0].content.parts[0].text;
+      addMessage(botReply, "bot");
+      // Add bot reply to history
+      chatHistory.push({ role: "model", parts: [{ text: botReply }] });
+    } else {
+      addMessage("⚠️ Sorry, I couldn't process that. Please try again.", "bot");
+    }
   } catch (err) {
+    removeLoading(loadingElement);
     addMessage("⚠️ There was an error connecting to the AI service.", "bot");
   }
 }
 
+// Event listeners
 sendBtn.onclick = sendMessage;
 input.addEventListener("keypress", e => { if (e.key === "Enter") sendMessage(); });
 
 // First message
-addMessage("Hi there! 👋 I’m Ada, Janice’s AI assistant. Want a quick overview of her services?", "bot");
+window.onload = () => {
+    addMessage("Hi there! 👋 I’m Ada, Janice’s AI assistant. Want a quick overview of her services?", "bot");
+};
+
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
